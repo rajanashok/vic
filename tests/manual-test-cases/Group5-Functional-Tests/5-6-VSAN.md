@@ -11,8 +11,11 @@ To verify the VIC appliance works with VMware Virtual SAN
 This test requires access to VMWare Nimbus cluster for dynamic ESXi and vCenter creation
 
 #Test Steps:
-1. Deploy a new vCenter in Nimbus
-2. Deploy three new ESXi hosts with 2 NICs each in Nimbus:  
+1. Deploy a new vCenter in Nimbus:  
+```test-vpx-4esx-virtual-fullInstall-vcva-8gbmem```
+
+
+ 2. Deploy three new ESXi hosts with 2 NICs each in Nimbus:  
 ```nimbus-esxdeploy --nics=2 esx-1 3620759```  
 ```nimbus-esxdeploy --nics=2 esx-2 3620759```  
 ```nimbus-esxdeploy --nics=2 esx-3 3620759```
