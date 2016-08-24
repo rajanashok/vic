@@ -99,6 +99,12 @@ Cleanup VIC Appliance On Test Server
     Gather Logs From Test Server
     Log To Console  Deleting the VCH appliance...
     ${output}=  Run VIC Machine Delete Command
+    ${out}=  Run  govc ls vm
+    Log  ${out}
+    ${out}=  Run  govc datastore.ls
+    Log  ${out}
+    ${out}=  Run  govc ls host/*/Resources/*
+    Log  ${out}
     [Return]  ${output}
 
 Run VIC Machine Delete Command
@@ -180,6 +186,12 @@ Get State Of Drone Build
     ${out}=  Run  drone build info vmware/vic ${num}
     ${lines}=  Split To Lines  ${out}
     [Return]  @{lines}[2]
+    
+Get Title of Drone Build
+    [Arguments]  ${num}
+    ${out}=  Run  drone build info vmware/vic ${num}
+    ${lines}=  Split To Lines  ${out}
+    [Return]  @{lines}[-1]
 
 Get Image IDs
     [Arguments]  ${dir}
@@ -261,6 +273,13 @@ Deploy Nimbus vCenter Server
     Log To Console  Successfully deployed new vCenter server - ${user}-${name}
     Close connection
     [Return]  ${user}-${name}  ${ip}
+
+Deploy Nimbus Testbed
+    [Arguments]  ${user}  ${password}  ${testbed}
+    Open Connection  %{NIMBUS_GW}
+    Login  ${user}  ${password}
+    ${out}=  Execute Command  nimbus-testbeddeploy ${testbed}
+    [Return]  ${out}
 
 Kill Nimbus Server
     [Arguments]  ${user}  ${password}  ${name}
